@@ -1,0 +1,16 @@
+In github actions having a yaml with below jobs.
+push_package:
+  needs: build_frame
+  if: (always() && needs.build_frame.result == 'success')
+  uses: "./.github/workflows/nuget_package.yml"
+  secrets: inherit
+
+The below job/step needs to be excuted after the above step.
+- name: nuget source
+  run: |
+    dotnet nuget add source --password ${{ secrets.Github }} --username admin@gai.com --store-password
+  ls ${{github.workspace}}
+
+The above mentioned two jobs/steps should combine in one file and the pipeline should be executed without errors.
+
+Generate the new yaml file so that the pipeline get succeeded.
